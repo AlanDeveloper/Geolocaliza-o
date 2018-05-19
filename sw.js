@@ -2,9 +2,9 @@
 
 var CACHE = 'pwabuilder-precache';
 var precacheFiles = [
-      '/alandeveloper/',
-      '/alandeveloper/index.html',
-      '/alandeveloper/css/style.css'
+      '/',
+      '/index.html',
+      '/css/style.css'
       /* Add an array of files to precache for your app */
     ];
 
