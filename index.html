@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Yoq</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <div id="top"><h2>Yoq</h2><h4>Suas entregas em qualquer lugar,a qualquer momento</h4></div>
+    <div class="container">
+        <div id="BoxForm">
+            <form name="formulario" id="formulario">
+                <ul>                      
+                    <li>
+                        <label>Localização do produto(A):</label>
+                        <input id="start" type="text" class="campos01" required="required"/>
+                    </li>
+                    <li>
+                        <label>Entrega(B):</label><button type="button" id="location">Usar localização</button>
+                        <input id="end" type="text" class="campos01" required="required"/>
+                        <p id="fail">Falha ao obter sua localização</p>
+                    </li>
+                    <li><button id="enviar">Ver rota</button></li>
+                </ul>
+            </form>
+        </div>
+        <div id="map"></div>
+    </div>
+    <script>
+        var btn = document.querySelector('#enviar');
+        document.querySelector('#location').addEventListener('click', function () {
+            if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                    document.getElementById('end').value = position.coords.latitude+','+ position.coords.longitude;
+                }, function () {
+                    document.querySelector('#fail').style.display = 'block';
+                    setInterval(myFunction, 1000);
+                });
+            }
+        });
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            var directionsService = new google.maps.DirectionsService;
+            var directionsDisplay = new google.maps.DirectionsRenderer;
+            var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 7,
+                    center: {lat: -32.05, lng: -52.11}
+            });
+            directionsDisplay.setMap(map);
+            directionsService.route({
+                origin: document.getElementById('start').value,
+                destination: document.getElementById('end').value,
+                travelMode: 'DRIVING'
+            }, function(response, status) {
+                    if (status === 'OK') {
+                        directionsDisplay.setDirections(response);
+                    } else {
+                        window.alert('Directions request failed due to ' + status);
+                    }
+            });
+            var myLatlng = new google.maps.LatLng(-32.050083, -52.116817);
+            var marker = new google.maps.Marker({
+                    position: myLatlng,
+                    name : 'Avenida Presidente Vargas',
+                    morada1 : 'Rio Grande',
+                    morada2: 'RS'
+            });
+            var iwContent = '<div><h2>Correio</h2>' + '<div>' + marker.name + '</div>' + '<div>' + marker.morada1 + ' - ' + marker.morada2 + '<br /> </div></div>';
+
+            var infowindow = new google.maps.InfoWindow({
+                    content: iwContent
+            });
+            marker.addListener('click', function() {
+                    infowindow.open(map, marker);
+            });
+            marker.setMap(map);
+        });
+        function myFunction () {document.querySelector('#fail').style.display = 'none';}
+        function initMap() {
+            var directionsService = new google.maps.DirectionsService;
+            var directionsDisplay = new google.maps.DirectionsRenderer;
+            var myLatlng = new google.maps.LatLng(-32.050083, -52.116817);
+            var mapOptions = {
+                    zoom: 15,
+                    center: myLatlng
+            }
+            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            var marker = new google.maps.Marker({
+                    position: myLatlng,
+                    name : 'Avenida Presidente Vargas',
+                    morada1 : 'Rio Grande',
+                    morada2: 'RS'
+            });
+            var iwContent = '<div><h2>Correio</h2>' + '<div>' + marker.name + '</div>' + '<div>' + marker.morada1 + ' - ' + marker.morada2 + '<br /> </div></div>';
+
+            var infowindow = new google.maps.InfoWindow({
+                    content: iwContent
+            });
+            marker.addListener('click', function() {
+                    infowindow.open(map, marker);
+            });
+            marker.setMap(map);
+        }
+        if (navigator.serviceWorker.controller) {
+        } else {
+          navigator.serviceWorker.register('sw.js', {
+            scope: './'
+          })
+        }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCw37gSoAYvkUQUPCq2XTFFeUQ-x-iMFyU&callback=initMap"></script>
+  </body>
+</html>

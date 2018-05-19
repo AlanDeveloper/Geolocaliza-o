@@ -1,0 +1,103 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Verdana, Arial, Tahoma;
+}
+#map {
+    height: 100%;
+    max-height: 500px;
+    max-width: 600px;
+    margin-top: 60px;
+    margin: 20px;
+}
+#top {
+    margin: auto;
+    background-color: #D3D3D3;
+    padding: 5px;
+    text-align: center;
+}
+#top h2 {
+    font-size: 25px;
+    font-weight: normal;
+}
+.container {
+    margin: auto;
+    max-width: 1000px;
+    height: 80%;
+}
+#BoxForm {
+    float: right;
+    max-width: 300px;
+    margin: 20px;     
+    padding: 10px 0 20px 10px;  
+    background:#fff;    
+    border: 1px solid #dcdcdc;     
+    border-radius: 10px; 
+}    
+#formulario ul li {
+    margin: 0px 0;
+    list-style: none;
+    position: relative;
+    clear: both;
+}
+#formulario label {  
+    margin: 0px 0;     
+    line-height: 45px;
+    text-align: left;     
+    float: left;     
+    color: #666;
+    font-size: 16px; 
+}
+.campos01 {     
+    padding: 5px;     
+    border: 1px solid #CCCCCC;     
+    background:#fcfcfc;     
+    border-radius: 5px;
+    font-size: 16px;
+}
+#enviar {     
+    width: 100px;     
+    height: 40px; 
+    cursor: pointer;
+    margin-top: 5px;
+    font-size: 16px;     
+    color:#f6f6f6;     
+    background:#06C;     
+    border: 1px solid #ccc;     
+    border-radius: 5px; 
+}  
+#enviar:hover {     
+    color: #000;     
+    background: #D0DDFD;     
+    border-color: #999; 
+}
+#location {
+    margin: 12px 8px;
+    padding: 5px;
+    background-color: white;
+    outline: none;
+}
+#fail {
+    background: #ff3333;
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 14px;
+    margin-right: 45px;
+    color: white;
+    display: none;
+}
+@media only screen and (max-width: 750px) {
+    .container {
+        height: 100%;
+    }
+    #BoxForm {
+        float: none;
+        margin: auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    #map {
+        margin: auto;
+    }
+}
