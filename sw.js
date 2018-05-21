@@ -1,5 +1,5 @@
+var offlinePage = new Request('offline.html');
 self.addEventListener('install', function(event) {
-  var offlinePage = new Request('offline.html');
   event.waitUntil(
   fetch(offlinePage).then(function(response) {
     return caches.open('pwabuilder-offline').then(function(cache) {
