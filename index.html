@@ -130,12 +130,13 @@
             });
             marker.setMap(map);
         }
-        if (navigator.serviceWorker.controller) {
-            } else {
-            navigator.serviceWorker.register('sw.js', {
-                scope: './'
-            })
-        }
+    </script>
+    <script>
+      if('serviceWorker' in navigator) {
+        navigator.serviceWorker
+                 .register('/sw.js')
+                 .then(function() { console.log("Service Worker Registered"); });
+      }
     </script>
     <script src="sw.js"></script>
     <script async defer
