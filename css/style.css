@@ -99,9 +99,6 @@ html, body {
     border-radius: 5px;
 }
 @media only screen and (max-width: 750px) {
-    .container {
-        height: 100%;
-    }
     #BoxForm {
         float: none;
         margin: auto;
