@@ -4,7 +4,7 @@ var currentCache = {
 };
 const offlineUrl = 'offline.html';
 
-self.addEventListener('install', event => {
+this.addEventListener('install', event => {
   event.waitUntil(
     caches.open(currentCache.offline).then(function(cache) {
       return cache.addAll([
@@ -13,7 +13,7 @@ self.addEventListener('install', event => {
     })
   );
 });
-self.addEventListener('fetch', event => {
+this.addEventListener('fetch', event => {
   // request.mode = navigate isn't supported in all browsers
   // so include a check for Accept: text/html header.
   if (event.request.mode === 'navigate' || (event.request.method === 'GET' && event.request.headers.get('accept').includes('text/html'))) {
