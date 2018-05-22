@@ -1,25 +1,37 @@
-self.addEventListener('install', function(event) {
-  var offlinePage = new Request('offline.html');
+'use strict';
+
+var cacheVersion = 1;
+var currentCache = {
+  offline: 'offline-cache' + cacheVersion
+};
+const offlineUrl = 'offline.html';
+
+this.addEventListener('install', event => {
   event.waitUntil(
-  fetch(offlinePage).then(function(response) {
-    return caches.open('pwabuilder-offline').then(function(cache) {
-      console.log('[PWA Builder] Cached offline page during Install'+ response.url);
-      return cache.put(offlinePage, response);
-    });
-  }));
+    caches.open(currentCache.offline).then(function(cache) {
+      return cache.addAll([
+          offlineUrl
+      ]);
+    })
+  );
 });
-self.addEventListener('fetch', function(event) {
-  event.respondWith(
-    fetch(event.request).catch(function(error) {
-        console.error( '[PWA Builder] Network request Failed. Serving offline page ' + error );
-        return caches.open('pwabuilder-offline').then(function(cache) {
-          return cache.match('offline.html');
-      });
-    }));
-});
-self.addEventListener('refreshOffline', function(response) {
-  return caches.open('pwabuilder-offline').then(function(cache) {
-    console.log('[PWA Builder] Offline page updated from refreshOffline event: '+ response.url);
-    return cache.put(offlinePage, response);
-  });
+this.addEventListener('fetch', event => {
+  // request.mode = navigate isn't supported in all browsers
+  // so include a check for Accept: text/html header.
+  if (event.request.mode === 'navigate' || (event.request.method === 'GET' && event.request.headers.get('accept').includes('text/html'))) {
+        event.respondWith(
+          fetch(event.request.url).catch(error => {
+              // Return the offline page
+              return caches.match(offlineUrl);
+          })
+    );
+  }
+  else{
+        // Respond with everything else if we can
+        event.respondWith(caches.match(event.request)
+                        .then(function (response) {
+                        return response || fetch(event.request);
+                    })
+            );
+      }
 });
