@@ -1,0 +1,55 @@
+section {
+    margin-top: 30px;
+}
+
+#title {
+    color: var(--color);
+    font-weight: normal;
+    text-align: center;
+
+    margin-top: 50px;
+}
+
+hr {
+    margin-top: 50px;
+    
+    border: 1px solid var(--color);
+    opacity: 0.2;
+    width: 200px;
+}
+
+form {
+    margin-top: 70px;
+}
+
+form button#location {
+    color: var(--color);
+    background-color: white;
+    margin-left: 10px;
+    outline: none;
+
+    border: 1px solid var(--color);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+form button#location:hover {
+    opacity: 0.8;
+}
+
+form button[type=submit] {
+    background-color: var(--color);
+}
+
+#map {
+    margin-top: 70px;
+    margin-bottom: 70px;
+    height: 500px;
+}
+
+
+@media (max-width: 600px) {
+    #title {
+        font-size: 1.4em;
+    }
+}
